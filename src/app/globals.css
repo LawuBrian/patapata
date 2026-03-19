@@ -1,0 +1,334 @@
+/* ── Google Fonts ── */
+@import url("https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Besley:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Pata Pata Design Tokens ── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Spectral", serif;
+  --font-spectral: "Spectral", serif;
+  --font-clarendon: "Besley", serif;
+  --font-bebas: "Bebas Neue", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
+  --font-mono: var(--font-geist-mono);
+
+  /* Brand Colors — exact palette */
+  --color-charcoal: #2B2622; /* Deep Charcoal Brown */
+  --color-charcoal-light: #3D352F;
+  --color-amber: #C48A2D; /* Golden Amber */
+  --color-amber-light: #E0A646;
+  --color-amber-dark: #A46F20;
+  --color-cream: #F5F1E8;  /* Warm Parchment - Primary Background */
+  --color-cream-dark: #E8E2D5;
+  --color-stone: #6E6258; /* Muted Vintage Brown */
+  --color-wood: #4A3A2C;
+  --color-wood-light: #6A5340;
+  --color-clay: #A2573B;
+  --color-clay-light: #C07155;
+
+  /* shadcn mappings */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  :root {
+    /* DARK CINEMATIC PALETTE -> WARM PARCHMENT PALETTE */
+    --background: 40 40% 93%; /* #F5F1E8 - Warm Parchment */
+    --foreground: 25 12% 15%; /* #2B2622 - Deep Charcoal Brown */
+    --card: 40 30% 90%; /* #E8E2D5 - slightly darker parchment */
+    --card-foreground: 25 12% 15%;
+    --popover: 40 40% 93%;
+    --popover-foreground: 25 12% 15%;
+    --primary: 37 63% 47%; /* #C48A2D - Golden Amber */
+    --primary-foreground: 25 12% 15%;
+    --secondary: 40 20% 85%;
+    --secondary-foreground: 25 12% 15%;
+    --muted: 25 11% 39%; /* #6E6258 - Muted vintage brown */
+    --muted-foreground: 40 40% 20%;
+    --accent: 13 47% 43%; /* #A2573B - Brick Clay */
+    --accent-foreground: 40 40% 95%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 40 40% 95%;
+    --border: 25 12% 80%;
+    --input: 25 12% 80%;
+    --ring: 37 63% 47%; /* Amber ring */
+    
+    --radius: 0.2rem;
+    
+    /* Direct brand colors */
+    --cream: 40 40% 93%; /* #F5F1E8 */
+    --amber: 37 63% 47%; /* #C48A2D */
+    --charcoal: 25 12% 15%; /* #2B2622 */
+    --stone: 25 11% 39%; /* #6E6258 */
+    --clay: 13 47% 43%; /* #A2573B */
+    --wood: 25 25% 23%; /* #4A3A2C */
+  }
+}
+
+:root {
+  --sidebar: #F5F1E8;
+  --sidebar-foreground: #2B2622;
+  --sidebar-primary: #C48A2D;
+  --sidebar-primary-foreground: #2B2622;
+  --sidebar-accent: #E8E2D5;
+  --sidebar-accent-foreground: #2B2622;
+  --sidebar-border: #D8D2C5;
+  --sidebar-ring: #C48A2D;
+}
+
+/* ── Base ── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden selection:bg-amber selection:text-background;
+  }
+  
+  /* Cinematic Film Grain & Vignette */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(circle, transparent 40%, rgba(43,38,34,0.1) 100%);
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-clarendon tracking-normal;
+  }
+  h1 {
+    @apply font-serif;
+  }
+  p {
+    @apply font-sans;
+  }
+}
+
+/* ── Film Grain Overlay ── */
+/* Removed old body::after film grain */
+
+/* ══════════════════════════════════════════
+   DISHOOM EDITORIAL LAYOUT — FLAT & BORDERS
+   ══════════════════════════════════════════ */
+.editorial-section {
+  position: relative;
+  background-color: transparent;
+  border-top: 1px solid rgba(242, 232, 216, 0.05); /* very faint cream */
+  margin: 0;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+/* No rounded cards, just flat editorial sections */
+
+/* Thin dark dividing lines between editorial items */
+.editorial-divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(30, 30, 30, 0.2);
+  margin: 2rem 0;
+}
+
+/* ══════════════════════════════════════════
+   WARM AMBER TORN NEWSPAPER WRAPPER
+   ══════════════════════════════════════════ */
+.amber-page-wrapper {
+  background-color: transparent; /* Changed: we want cream as main, Amber is an accent block */
+  position: relative;
+}
+
+/* The true amber block (like an insert in the newspaper) */
+.amber-insert {
+  background-color: #C48A2D;
+  color: #2B2622;
+  position: relative;
+  padding: 4rem 1.5rem;
+  margin: 4rem 0;
+  border-top: 1px solid #2B2622;
+  border-bottom: 1px solid #2B2622;
+}
+.amber-insert h2, .amber-insert p {
+  color: #2B2622;
+}
+
+/* Music notes pattern overlay on amber */
+.amber-insert::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/music-notes-pattern.svg");
+  background-repeat: repeat;
+  background-size: 300px;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================================
+   CINEMATIC UTILITIES
+   ========================================= */
+
+.cinematic-glow {
+  background: radial-gradient(circle at center, rgba(214,154,58,0.08) 0%, transparent 70%);
+}
+
+.dark-matte {
+  background: linear-gradient(to bottom, transparent, rgba(18,18,18,0.9) 80%, #121212);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(214, 154, 58, 0.4);
+}
+/* ══════════════════════════════════════════
+   TORN PAPER / RIPPED NEWSPAPER EDGES (SIDES OVER THE CREAM)
+   ══════════════════════════════════════════ */
+.torn-side-left,
+.torn-side-right {
+  position: fixed; /* Fixed to scroll with page like a frame */
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 50; /* Above most content */
+  pointer-events: none;
+  background-image: url("/music-notes-pattern.svg");
+  background-repeat: repeat;
+  background-size: 200px;
+  opacity: 0.15;
+}
+@media (min-width: 768px) {
+  .torn-side-left,
+  .torn-side-right {
+    width: 140px;
+  }
+}
+.torn-side-left {
+  left: 0;
+  mask-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 100%);
+  border-right: 2px dashed rgba(30, 30, 30, 0.1);
+}
+.torn-side-right {
+  right: 0;
+  mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 100%);
+  border-left: 2px dashed rgba(30, 30, 30, 0.1);
+}
+
+/* ── Luxury Transitions ── */
+.luxury-transition {
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Amber Glow ── */
+.amber-glow {
+  box-shadow: 0 0 20px rgba(214, 154, 58, 0);
+  transition: box-shadow 0.6s ease, transform 0.6s ease;
+}
+.amber-glow:hover {
+  box-shadow: 0 0 30px rgba(214, 154, 58, 0.4);
+  transform: translateY(-4px);
+}
+
+/* ── Button Pulse ── */
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(214, 154, 58, 0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(214, 154, 58, 0.2); }
+}
+.pulse-amber {
+  animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+/* ── Cinematic Fade ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Section Divider ── */
+.section-divider {
+  width: 80px;
+  height: 2px;
+  background: #1E1E1E; /* Dishoom style dark line */
+  margin: 0 auto;
+}
+
+/* ── Warm Parchment Card ── */
+.bg-parchment {
+  background-color: #E8E2D5;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F1E8;
+}
+::-webkit-scrollbar-thumb {
+  background: #2B2622;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C48A2D;
+}
