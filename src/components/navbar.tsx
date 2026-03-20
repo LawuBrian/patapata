@@ -85,7 +85,7 @@ export function Navbar() {
               {/* Try to load logo image; fall back to wordmark */}
               <motion.div whileHover={{ opacity: 0.8 }} className="relative flex items-center">
                 <span
-                  className={`text-3xl md:text-4xl font-nunito tracking-tight uppercase transition-colors duration-500 font-extrabold ${textColor}`}
+                  className={`text-3xl md:text-4xl font-nunito tracking-tight uppercase transition-colors duration-500 font-light ${textColor}`}
                 >
                   Pata Pata
                 </span>

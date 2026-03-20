@@ -48,19 +48,33 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
   const effectiveScrollHeight = isMobile ? Math.min(scrollHeight, 900) : scrollHeight;
   const { scrollY } = useScroll();
 
-  const clipStart = useTransform(
+  // On mobile use a wider horizontal clip so the initial state looks landscape
+  // rather than a portrait-shaped rectangle.
+  const mobileClipX = 4;   // near full width  → landscape feel
+  const mobileClipY = 20;  // taller crop top/bottom → letterbox → still landscape
+
+  const clipStartX = useTransform(
     scrollY,
     [0, effectiveScrollHeight],
-    prefersReducedMotion ? [0, 0] : [initialClipPercentage, 0]
+    prefersReducedMotion ? [0, 0] : [isMobile ? mobileClipX : initialClipPercentage, 0]
   );
-
-  const clipEnd = useTransform(
+  const clipEndX = useTransform(
     scrollY,
     [0, effectiveScrollHeight],
-    prefersReducedMotion ? [100, 100] : [100 - initialClipPercentage, 100]
+    prefersReducedMotion ? [100, 100] : [isMobile ? 100 - mobileClipX : 100 - initialClipPercentage, 100]
+  );
+  const clipStartY = useTransform(
+    scrollY,
+    [0, effectiveScrollHeight],
+    prefersReducedMotion ? [0, 0] : [isMobile ? mobileClipY : initialClipPercentage, 0]
+  );
+  const clipEndY = useTransform(
+    scrollY,
+    [0, effectiveScrollHeight],
+    prefersReducedMotion ? [100, 100] : [isMobile ? 100 - mobileClipY : 100 - initialClipPercentage, 100]
   );
 
-  const clipPath = useMotionTemplate`polygon(${clipStart}% ${clipStart}%, ${clipEnd}% ${clipStart}%, ${clipEnd}% ${clipEnd}%, ${clipStart}% ${clipEnd}%)`;
+  const clipPath = useMotionTemplate`polygon(${clipStartX}% ${clipStartY}%, ${clipEndX}% ${clipStartY}%, ${clipEndX}% ${clipEndY}%, ${clipStartX}% ${clipEndY}%)`;
 
   // Ken Burns zoom effect
   const videoScale = useTransform(

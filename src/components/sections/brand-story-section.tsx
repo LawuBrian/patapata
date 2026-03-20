@@ -13,15 +13,26 @@ export function BrandStorySection() {
         {/* Row 1: Immersive media left + story text right */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center mb-16 md:mb-24">
 
-          {/* Left — immersive image/video */}
+          {/* Left — immersive video */}
           <AnimatedSection>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-black/5">
-              <img
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80"
-                alt="Inside Pata Pata Restaurant"
+            <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-charcoal">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80"
                 className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent" />
+              >
+                <source src="/guitarpata.mp4" type="video/mp4" />
+                {/* fallback image if video fails */}
+                <img
+                  src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80"
+                  alt="Inside Pata Pata Restaurant"
+                  className="w-full h-full object-cover"
+                />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent pointer-events-none" />
               {/* Location badge */}
               <div className="absolute bottom-6 left-6">
                 <span className="font-bebas text-cream text-xs tracking-[0.3em] uppercase bg-charcoal/70 backdrop-blur-sm px-3 py-1.5">

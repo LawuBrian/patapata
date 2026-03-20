@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SmoothScrollHero from "@/components/ui/smooth-scroll-hero";
@@ -9,26 +9,46 @@ import { MagneticButton } from "@/components/ui/magnetic-button";
 /* ─────────────────────────────────────────────
    HERO — Fade-only quotes, fixed dead-center
 
-   Text is ALWAYS centered on screen from the
-   very first frame. Only opacity changes.
+   Desktop scroll narrative (scrollHeight = 1800):
+   0–400px     Quote 1
+   350–1000px  Quote 2
+   750–1400px  Quote 3
+   1350–1600px Guest review
+   1550–1750px "All Welcome"
+   1700–1800   CTA
 
-   Scroll narrative (scrollHeight = 1800):
-   0–400px     Quote 1 visible (bold)
-   350–800px   Quote 2 fades in
-   750–1200px  Quote 3 fades in
-   1350–1650px Guest review (video nearly full)
-   1550+       "All Welcome"
+   Mobile scroll narrative (scrollHeight = 900):
+   0–280px     Quote 1
+   260–560px   Quote 2
+   540–820px   Quote 3
+   800–920px   "All Welcome" + CTA
    ───────────────────────────────────────────── */
 
 export function HeroSection() {
   const { scrollY } = useScroll();
+  const [isMobile, setIsMobile] = useState(false);
 
-  const quote1Opacity = useTransform(scrollY, [0, 100, 400], [1, 1, 0]);
-  const quote2Opacity = useTransform(scrollY, [350, 550, 800, 1000], [0, 1, 1, 0]);
-  const quote3Opacity = useTransform(scrollY, [750, 950, 1200, 1400], [0, 1, 1, 0]);
-  const reviewOpacity = useTransform(scrollY, [1350, 1600], [0, 1]);
-  const welcomeOpacity = useTransform(scrollY, [1550, 1750], [0, 1]);
-  const ctaOpacity = useTransform(scrollY, [1700, 1800], [0, 1]);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Timing compresses on mobile to fit within the 900px effective scroll height
+  const q1Range  = isMobile ? [0, 60, 260]              : [0, 100, 400];
+  const q2Range  = isMobile ? [240, 360, 500, 620]      : [350, 550, 800, 1000];
+  const q3Range  = isMobile ? [580, 680, 780, 870]      : [750, 950, 1200, 1400];
+  const revRange = isMobile ? [0, 0]                    : [1350, 1600]; // hidden on mobile
+  const welRange = isMobile ? [820, 920]                : [1550, 1750];
+  const ctaRange = isMobile ? [860, 950]                : [1700, 1800];
+
+  const quote1Opacity  = useTransform(scrollY, q1Range,  [1, 1, 0]);
+  const quote2Opacity  = useTransform(scrollY, q2Range,  [0, 1, 1, 0]);
+  const quote3Opacity  = useTransform(scrollY, q3Range,  [0, 1, 1, 0]);
+  const reviewOpacity  = useTransform(scrollY, revRange, [0, 1]);
+  const welcomeOpacity = useTransform(scrollY, welRange, [0, 1]);
+  const ctaOpacity     = useTransform(scrollY, ctaRange, [0, 1]);
 
   return (
     <section className="relative" id="hero-section">
@@ -51,12 +71,12 @@ export function HeroSection() {
         <div className="flex flex-col items-center justify-center h-full w-full">
 
           {/* Quote stack — all absolutely positioned, only opacity changes */}
-          <div className="relative w-full flex items-center justify-center" style={{ height: "30vh" }}>
+          <div className="relative w-full flex items-center justify-center" style={{ height: "28vh" }}>
 
             {/* Quote 1 — bold, visible immediately on page load */}
             <motion.p
               style={{ opacity: quote1Opacity }}
-              className="absolute inset-0 flex items-center justify-center font-nunito text-cream text-[22px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-extrabold text-center px-6"
+              className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[17px] md:text-[32px] lg:text-[42px] leading-[1.45] md:leading-[1.8] tracking-normal drop-shadow-lg font-extrabold text-center px-8 md:px-6"
             >
               Where Maboneng meets over food,<br />
               music, and candlelight.
@@ -65,7 +85,7 @@ export function HeroSection() {
             {/* Quote 2 — atmospheric */}
             <motion.p
               style={{ opacity: quote2Opacity }}
-              className="absolute inset-0 flex items-center justify-center font-nunito text-cream text-[22px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-6"
+              className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.5] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
             >
               Rustic wood, warm lights, and African spice<br />
               drift through the room as conversation grows<br />
@@ -75,23 +95,23 @@ export function HeroSection() {
             {/* Quote 3 — invitation */}
             <motion.p
               style={{ opacity: quote3Opacity }}
-              className="absolute inset-0 flex items-center justify-center font-nunito text-cream text-[22px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-6"
+              className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.5] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
             >
               Join us for lunch, stay for the music,<br />
               linger into the night.
             </motion.p>
 
-            {/* Guest review — when video is almost full */}
+            {/* Guest review — desktop only (hidden on mobile, no scroll range) */}
             <motion.div
               style={{ opacity: reviewOpacity }}
-              className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
+              className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center px-6"
             >
               <p className="font-spectral italic text-cream text-[19px] md:text-[24px] lg:text-[32px] leading-[1.8] md:leading-[2] tracking-[0.02em] drop-shadow-lg mb-6">
                 &ldquo;If you want to understand the spirit<br />
                 of Johannesburg, spend an evening<br />
                 at Pata Pata.&rdquo;
               </p>
-              <p className="font-bebas text-cream/50 text-[13px] md:text-[15px] tracking-[0.35em] uppercase">
+              <p className="font-spectral text-cream/50 text-[13px] md:text-[15px] tracking-[0.35em] uppercase">
                 &mdash; Shabalala, Guest review
               </p>
             </motion.div>
@@ -100,7 +120,7 @@ export function HeroSection() {
           {/* "All Welcome" */}
           <motion.p
             style={{ opacity: welcomeOpacity }}
-            className="mt-6 text-[11px] md:text-sm tracking-[0.35em] font-bebas text-cream/70 uppercase"
+            className="mt-3 md:mt-6 text-[10px] md:text-sm tracking-[0.3em] md:tracking-[0.35em] font-spectral text-cream/70 uppercase"
           >
             <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle mr-4" />
             All Welcome
@@ -110,7 +130,7 @@ export function HeroSection() {
           {/* Reservation CTA — appears after "All Welcome" */}
           <motion.div
             style={{ opacity: ctaOpacity }}
-            className="mt-8 pointer-events-auto"
+            className="mt-4 md:mt-8 pointer-events-auto"
           >
             <MagneticButton intensity={20}>
               <Link
