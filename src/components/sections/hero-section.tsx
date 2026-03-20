@@ -76,16 +76,21 @@ export function HeroSection() {
           All three elements (quote area · "All Welcome" · CTA) share the
           same gap so the vertical rhythm matches the quote line-spacing.
         */}
+        {/*
+          w-full on BOTH flex containers is critical — without it the inner
+          column shrink-wraps and all absolute children inherit a tiny width,
+          causing word-by-word wrapping.
+        */}
         <div className="flex flex-col items-center justify-center h-full w-full">
-          <div className="flex flex-col items-center gap-6 md:gap-8" style={{ marginTop: "10vh" }}>
+          <div className="flex flex-col items-center gap-5 md:gap-7 w-full" style={{ marginTop: "10vh" }}>
 
             {/* Quote stack — absolutely stacked, only opacity animates */}
-            <div className="relative w-full flex items-center justify-center" style={{ height: "18vh" }}>
+            <div className="relative w-full" style={{ height: "16vh" }}>
 
               {/* Quote 1 — bold opener */}
               <motion.p
                 style={{ opacity: quote1Opacity }}
-                className="absolute inset-0 flex items-center justify-center font-spectral font-semibold text-cream text-[15px] md:text-[22px] lg:text-[26px] leading-[1.65] tracking-wide drop-shadow-lg text-center px-12 md:px-20 lg:px-32 max-w-2xl mx-auto"
+                className="absolute inset-0 flex items-center justify-center font-spectral font-semibold text-cream text-[15px] md:text-[20px] lg:text-[24px] leading-[1.6] tracking-wide drop-shadow-lg text-center px-8 md:px-32 lg:px-48"
               >
                 Where Maboneng meets over food, music, and candlelight.
               </motion.p>
@@ -93,7 +98,7 @@ export function HeroSection() {
               {/* Quote 2 — atmospheric */}
               <motion.p
                 style={{ opacity: quote2Opacity }}
-                className="absolute inset-0 flex items-center justify-center font-spectral font-normal text-cream text-[13px] md:text-[18px] lg:text-[21px] leading-[1.75] tracking-wide drop-shadow-lg text-center px-12 md:px-24 lg:px-36 max-w-xl mx-auto"
+                className="absolute inset-0 flex items-center justify-center font-spectral font-normal text-cream text-[13px] md:text-[17px] lg:text-[19px] leading-[1.7] tracking-wide drop-shadow-lg text-center px-8 md:px-36 lg:px-52"
               >
                 Rustic wood, warm lights, and African spice drift through the room as conversation grows and the evening settles in.
               </motion.p>
@@ -101,7 +106,7 @@ export function HeroSection() {
               {/* Quote 3 — invitation */}
               <motion.p
                 style={{ opacity: quote3Opacity }}
-                className="absolute inset-0 flex items-center justify-center font-spectral font-normal text-cream text-[14px] md:text-[20px] lg:text-[24px] leading-[1.65] tracking-wide drop-shadow-lg text-center px-12 md:px-20 lg:px-32 max-w-xl mx-auto"
+                className="absolute inset-0 flex items-center justify-center font-spectral font-normal text-cream text-[14px] md:text-[19px] lg:text-[22px] leading-[1.6] tracking-wide drop-shadow-lg text-center px-8 md:px-32 lg:px-48"
               >
                 Join us for lunch, stay for the music, linger into the night.
               </motion.p>
@@ -109,33 +114,33 @@ export function HeroSection() {
               {/* Guest review — desktop only */}
               <motion.div
                 style={{ opacity: reviewOpacity }}
-                className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center gap-4 px-20 lg:px-32"
+                className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center gap-4 px-32 lg:px-48"
               >
-                <p className="font-spectral italic text-cream text-[16px] md:text-[20px] lg:text-[24px] leading-[1.8] tracking-[0.01em] drop-shadow-lg max-w-lg mx-auto">
+                <p className="font-spectral italic text-cream text-[17px] lg:text-[20px] leading-[1.75] tracking-[0.01em] drop-shadow-lg">
                   &ldquo;If you want to understand the spirit of Johannesburg, spend an evening at Pata Pata.&rdquo;
                 </p>
-                <p className="font-spectral text-cream/50 text-[11px] tracking-[0.3em] uppercase">
+                <p className="font-spectral text-cream/50 text-[11px] tracking-[0.28em] uppercase">
                   &mdash; Shabalala, Guest review
                 </p>
               </motion.div>
             </div>
 
-            {/* "All Welcome" — same gap as quote line-spacing */}
+            {/* "All Welcome" */}
             <motion.p
               style={{ opacity: welcomeOpacity }}
-              className="text-[10px] md:text-sm tracking-[0.3em] md:tracking-[0.35em] font-spectral text-cream/70 uppercase"
+              className="text-[10px] md:text-[11px] tracking-[0.3em] font-spectral text-cream/70 uppercase"
             >
-              <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle mr-4" />
+              <span className="inline-block w-6 h-[1px] bg-cream/40 align-middle mr-3" />
               All Welcome
-              <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle ml-4" />
+              <span className="inline-block w-6 h-[1px] bg-cream/40 align-middle ml-3" />
             </motion.p>
 
-            {/* Reservation CTA — same gap below "All Welcome" */}
+            {/* Reservation CTA */}
             <motion.div style={{ opacity: ctaOpacity }} className="pointer-events-auto">
               <MagneticButton intensity={20}>
                 <Link
                   href="/contact#reserve"
-                  className="inline-block px-10 py-4 bg-amber hover:bg-amber-light text-charcoal font-bebas tracking-[0.25em] uppercase text-sm rounded-sm pulse-amber transition-colors duration-500"
+                  className="inline-block px-8 md:px-10 py-3.5 md:py-4 bg-amber hover:bg-amber-light text-charcoal font-bebas tracking-[0.25em] uppercase text-sm rounded-sm pulse-amber transition-colors duration-500"
                 >
                   Reserve Your Table
                 </Link>
