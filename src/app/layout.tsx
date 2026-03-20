@@ -48,18 +48,10 @@ export const metadata: Metadata = {
   description:
     "Experience rustic-chic African dining, live music, craft cocktails and vintage atmosphere at Pata Pata, Johannesburg. Mozambique prawns, oxtail & grilled specialties.",
   keywords: "Pata Pata, African cuisine, Johannesburg restaurant, live music, vintage dining, Mozambique prawns, oxtail",
-  icons: {
-    icon: [
-      { url: "/patapatafavicon.svg", type: "image/svg+xml" },
-      { url: "/OIP.webp", type: "image/webp" },
-    ],
-    apple: "/OIP.webp",
-  },
   openGraph: {
     title: "Pata Pata | African Cuisine & Vintage Atmosphere",
     description: "Rustic-chic African dining, live music & craft cocktails in Johannesburg.",
     type: "website",
-    images: [{ url: "/OIP.webp" }],
   },
 };
 

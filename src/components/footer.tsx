@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export function Footer() {
   return (
-    <footer className="relative bg-background text-foreground border-t border-charcoal/10 overflow-hidden depth-noise vol-light">
+    <footer className="relative bg-background text-foreground border-t border-charcoal/10 overflow-hidden">
       {/* Vintage decorative elements instead of candlelight */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
         <motion.div

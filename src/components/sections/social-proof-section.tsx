@@ -69,15 +69,11 @@ function StarRating({ count }: { count: number }) {
 
 export function SocialProofSection() {
   return (
-    <section className="relative py-16 md:py-24 bg-charcoal overflow-hidden vol-light depth-noise ao-corners section-depth-shadow">
-      {/* Layered ambient depth glows */}
+    <section className="relative py-16 md:py-24 bg-charcoal overflow-hidden">
+      {/* Ambient glow */}
       <div
-        className="absolute top-0 right-1/4 w-[500px] h-[300px] rounded-full blur-[120px] opacity-[0.09] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, #C48A2D 0%, #7A4A10 50%, transparent 70%)" }}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-[400px] h-[250px] rounded-full blur-[100px] opacity-[0.06] pointer-events-none"
-        style={{ background: "radial-gradient(circle, #4A3020, transparent)" }}
+        className="absolute top-0 right-1/4 w-[500px] h-[300px] rounded-full blur-[120px] opacity-[0.07] pointer-events-none"
+        style={{ background: "radial-gradient(circle, #C48A2D, transparent)" }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-10 z-10">
@@ -91,16 +87,13 @@ export function SocialProofSection() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 mt-12">
           {photoTiles.map((tile, i) => (
             <AnimatedSection key={i} delay={i * 0.07}>
-              <div className="group relative aspect-square overflow-hidden bg-charcoal/50 surface-sheen">
+              <div className="group relative aspect-square overflow-hidden bg-charcoal/50">
                 <img
                   src={tile.src}
                   alt={tile.alt}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-amber/10 transition-colors duration-500" />
-                {/* Per-tile depth corner */}
-                <div className="absolute inset-0 pointer-events-none"
-                  style={{background: "radial-gradient(ellipse 50% 50% at 0% 100%, rgba(10,6,4,0.55) 0%, transparent 100%)"}} />
               </div>
             </AnimatedSection>
           ))}

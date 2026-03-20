@@ -33,14 +33,14 @@ const banners = [
 
 export function ThreeBannersSection() {
   return (
-    <section className="w-full depth-noise section-depth-shadow">
+    <section className="w-full">
       {/* Desktop — 3 diagonal banners */}
       <div className="hidden md:flex h-[500px] lg:h-[600px]">
         {banners.map((b, i) => (
           <Link
             key={b.href}
             href={b.href}
-            className="relative flex-1 group overflow-hidden light-ray"
+            className="relative flex-1 group overflow-hidden"
             style={{ clipPath: b.clipDesktop }}
           >
             {/* Background image */}
@@ -56,13 +56,10 @@ export function ThreeBannersSection() {
               />
             </motion.div>
 
-            {/* Overlay with depth gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-charcoal/30 via-charcoal/50 to-charcoal/70 group-hover:from-charcoal/20 group-hover:to-charcoal/60 transition-colors duration-700" />
-            {/* Amber hover tint + depth bloom */}
-            <div className="absolute inset-0 bg-amber/0 group-hover:bg-amber/8 transition-colors duration-700" />
-            {/* Corner AO */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{background: "radial-gradient(ellipse 40% 40% at 0% 100%, rgba(10,6,4,0.6) 0%, transparent 100%)"}} />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-charcoal/50 group-hover:bg-charcoal/40 transition-colors duration-700" />
+            {/* Amber hover tint */}
+            <div className="absolute inset-0 bg-amber/0 group-hover:bg-amber/5 transition-colors duration-700" />
 
             {/* Content */}
             <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12 z-10">

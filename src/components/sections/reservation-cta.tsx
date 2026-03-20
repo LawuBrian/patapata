@@ -16,7 +16,7 @@ export function ReservationCTA() {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden depth-noise ao-corners">
+    <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Background — fixed parallax only on desktop */}
       <div
         className="absolute inset-0"
@@ -28,12 +28,7 @@ export function ReservationCTA() {
           backgroundAttachment: isMobile ? "scroll" : "fixed",
         }}
       />
-      {/* Multi-layer depth composite */}
-      <div className="absolute inset-0 bg-charcoal/75 backdrop-blur-sm" />
-      <div className="absolute inset-0 pointer-events-none"
-        style={{background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(196,138,45,0.08) 0%, transparent 70%)"}} />
-      <div className="absolute inset-0 pointer-events-none"
-        style={{background: "linear-gradient(180deg, rgba(10,6,4,0.55) 0%, transparent 30%, transparent 70%, rgba(10,6,4,0.55) 100%)"}} />
+      <div className="absolute inset-0 bg-charcoal/80 backdrop-blur-sm" />
 
       <div className="relative max-w-3xl mx-auto px-4 md:px-10 text-center">
         <AnimatedSection>

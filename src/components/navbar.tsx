@@ -82,17 +82,13 @@ export function Navbar() {
 
             {/* Logo Center */}
             <Link href="/" className="group flex-1 flex justify-center items-center">
-              <motion.div
-                whileHover={{ scale: 1.04, opacity: 0.9 }}
-                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="relative flex items-center"
-              >
-                <img
-                  src="/OIP.webp"
-                  alt="Pata Pata"
-                  className="h-12 md:h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(196,138,45,0.35)]"
-                  style={{ filter: inHero ? "brightness(1)" : "brightness(0.15) sepia(1) saturate(4) hue-rotate(5deg)" }}
-                />
+              {/* Try to load logo image; fall back to wordmark */}
+              <motion.div whileHover={{ opacity: 0.8 }} className="relative flex items-center">
+                <span
+                  className={`text-3xl md:text-4xl font-nunito tracking-tight uppercase transition-colors duration-500 font-light ${textColor}`}
+                >
+                  Pata Pata
+                </span>
               </motion.div>
             </Link>
 

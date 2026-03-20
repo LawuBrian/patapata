@@ -7,7 +7,7 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 
 export function BrandStorySection() {
   return (
-    <section className="relative bg-cream py-16 md:py-24 overflow-hidden vol-light depth-noise section-depth-shadow">
+    <section className="relative bg-cream py-16 md:py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-10">
 
         {/* Row 1: Immersive media left + story text right */}
