@@ -79,48 +79,42 @@ export function HeroSection() {
         <div className="flex flex-col items-center justify-center h-full w-full">
           <div className="flex flex-col items-center gap-6 md:gap-8" style={{ marginTop: "10vh" }}>
 
-            {/* Quote stack — all absolutely positioned, only opacity changes */}
-            <div className="relative w-full flex items-center justify-center" style={{ height: "26vh" }}>
+            {/* Quote stack — absolutely stacked, only opacity animates */}
+            <div className="relative w-full flex items-center justify-center" style={{ height: "18vh" }}>
 
-              {/* Quote 1 */}
+              {/* Quote 1 — bold opener */}
               <motion.p
                 style={{ opacity: quote1Opacity }}
-                className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[17px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-extrabold text-center px-8 md:px-6"
+                className="absolute inset-0 flex items-center justify-center font-spectral font-semibold text-cream text-[15px] md:text-[22px] lg:text-[26px] leading-[1.65] tracking-wide drop-shadow-lg text-center px-12 md:px-20 lg:px-32 max-w-2xl mx-auto"
               >
-                Where Maboneng meets over food,<br />
-                music, and candlelight.
+                Where Maboneng meets over food, music, and candlelight.
               </motion.p>
 
-              {/* Quote 2 */}
+              {/* Quote 2 — atmospheric */}
               <motion.p
                 style={{ opacity: quote2Opacity }}
-                className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
+                className="absolute inset-0 flex items-center justify-center font-spectral font-normal text-cream text-[13px] md:text-[18px] lg:text-[21px] leading-[1.75] tracking-wide drop-shadow-lg text-center px-12 md:px-24 lg:px-36 max-w-xl mx-auto"
               >
-                Rustic wood, warm lights, and African spice<br />
-                drift through the room as conversation grows<br />
-                and the evening settles in.
+                Rustic wood, warm lights, and African spice drift through the room as conversation grows and the evening settles in.
               </motion.p>
 
-              {/* Quote 3 */}
+              {/* Quote 3 — invitation */}
               <motion.p
                 style={{ opacity: quote3Opacity }}
-                className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
+                className="absolute inset-0 flex items-center justify-center font-spectral font-normal text-cream text-[14px] md:text-[20px] lg:text-[24px] leading-[1.65] tracking-wide drop-shadow-lg text-center px-12 md:px-20 lg:px-32 max-w-xl mx-auto"
               >
-                Join us for lunch, stay for the music,<br />
-                linger into the night.
+                Join us for lunch, stay for the music, linger into the night.
               </motion.p>
 
               {/* Guest review — desktop only */}
               <motion.div
                 style={{ opacity: reviewOpacity }}
-                className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center px-6 gap-6"
+                className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center gap-4 px-20 lg:px-32"
               >
-                <p className="font-spectral italic text-cream text-[19px] md:text-[24px] lg:text-[32px] leading-[1.8] md:leading-[2] tracking-[0.02em] drop-shadow-lg">
-                  &ldquo;If you want to understand the spirit<br />
-                  of Johannesburg, spend an evening<br />
-                  at Pata Pata.&rdquo;
+                <p className="font-spectral italic text-cream text-[16px] md:text-[20px] lg:text-[24px] leading-[1.8] tracking-[0.01em] drop-shadow-lg max-w-lg mx-auto">
+                  &ldquo;If you want to understand the spirit of Johannesburg, spend an evening at Pata Pata.&rdquo;
                 </p>
-                <p className="font-spectral text-cream/50 text-[13px] md:text-[15px] tracking-[0.35em] uppercase">
+                <p className="font-spectral text-cream/50 text-[11px] tracking-[0.3em] uppercase">
                   &mdash; Shabalala, Guest review
                 </p>
               </motion.div>
