@@ -8,6 +8,7 @@ import {
   useScroll,
   useTransform,
   useReducedMotion,
+  type MotionValue,
 } from "framer-motion";
 
 interface iISmoothScrollHeroProps {
@@ -76,6 +77,28 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
 
   const clipPath = useMotionTemplate`polygon(${clipStartX}% ${clipStartY}%, ${clipEndX}% ${clipStartY}%, ${clipEndX}% ${clipEndY}%, ${clipStartX}% ${clipEndY}%)`;
 
+  // Glow border — tracks the clip rectangle edges (same values, as %‑strings)
+  // clipStartX === right inset (symmetric), clipStartY === bottom inset (symmetric)
+  const glowLeft   = useMotionTemplate`${clipStartX}%`;
+  const glowRight  = useMotionTemplate`${clipStartX}%`;
+  const glowTop    = useMotionTemplate`${clipStartY}%`;
+  const glowBottom = useMotionTemplate`${clipStartY}%`;
+
+  // Fullscreen flash — fires once when clip is nearly expanded
+  const hasFlashedRef = useRef(false);
+  const [glowClass, setGlowClass] = useState<"led-glow" | "led-flash">("led-glow");
+
+  useEffect(() => {
+    const unsub = scrollY.on("change", (y) => {
+      if (!hasFlashedRef.current && y >= effectiveScrollHeight * 0.92) {
+        hasFlashedRef.current = true;
+        setGlowClass("led-flash");
+        setTimeout(() => setGlowClass("led-glow"), 2500);
+      }
+    });
+    return unsub;
+  }, [scrollY, effectiveScrollHeight]);
+
   // Ken Burns zoom effect
   const videoScale = useTransform(
     scrollY,
@@ -113,7 +136,7 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
 
         {/* Video/Image layer with clip-path */}
         <motion.div
-          className="absolute inset-0 overflow-hidden"
+          className="absolute inset-0 overflow-hidden hero-clip"
           style={{
             clipPath,
             willChange: "transform, opacity",
@@ -240,6 +263,18 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
           />
 
         </motion.div>
+
+        {/* ── LED glow border — tracks the clip rectangle, outside clip-path so shadow is visible ── */}
+        <motion.div
+          className={`absolute pointer-events-none z-25 ${glowClass}`}
+          style={{
+            top:    glowTop,
+            left:   glowLeft,
+            right:  glowRight,
+            bottom: glowBottom,
+            border: "1px solid rgba(196,138,45,0.45)",
+          }}
+        />
 
         {/* ── Text layer — OUTSIDE the clipPath, always full-screen ── */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">

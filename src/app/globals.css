@@ -293,6 +293,64 @@
   animation: subtle-pulse 4s ease-in-out infinite;
 }
 
+/* ══════════════════════════════════════════
+   LED AMBER GLOW — images & hero border
+   ══════════════════════════════════════════ */
+
+/* Subtle pulsing LED glow applied to every image/video wrapper */
+@keyframes led-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(196, 138, 45, 0.32),
+      0 0 14px 3px rgba(196, 138, 45, 0.14),
+      0 0 32px 8px rgba(196, 138, 45, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1.5px rgba(196, 138, 45, 0.58),
+      0 0 24px 7px rgba(196, 138, 45, 0.26),
+      0 0 50px 16px rgba(196, 138, 45, 0.11);
+  }
+}
+
+/* Hero fullscreen burst — fires once, lasts 2 s */
+@keyframes led-flash {
+  0% {
+    box-shadow:
+      0 0 0 1.5px rgba(196, 138, 45, 0.6),
+      0 0 24px 7px rgba(196, 138, 45, 0.28);
+  }
+  18% {
+    box-shadow:
+      0 0 0 4px rgba(196, 138, 45, 1),
+      0 0 55px 22px rgba(196, 138, 45, 0.65),
+      0 0 110px 45px rgba(196, 138, 45, 0.28),
+      inset 0 0 70px 24px rgba(196, 138, 45, 0.18);
+  }
+  55% {
+    box-shadow:
+      0 0 0 2px rgba(196, 138, 45, 0.75),
+      0 0 35px 12px rgba(196, 138, 45, 0.42),
+      inset 0 0 40px 14px rgba(196, 138, 45, 0.12);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(196, 138, 45, 0.32),
+      0 0 14px 3px rgba(196, 138, 45, 0.14);
+  }
+}
+
+.led-glow  { animation: led-glow  3s ease-in-out infinite; }
+.led-flash { animation: led-flash 2s ease-out forwards; }
+
+/* Auto-apply to every image / video container in the page body.
+   The hero clip div is excluded via .hero-clip class (its clip-path
+   would swallow a box-shadow anyway — handled by a sibling overlay). */
+main .overflow-hidden:has(img):not(.hero-clip),
+main .overflow-hidden:has(video):not(.hero-clip) {
+  animation: led-glow 3s ease-in-out infinite;
+}
+
 /* ── Cinematic Fade ── */
 .fade-up {
   opacity: 0;
