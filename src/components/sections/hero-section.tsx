@@ -68,79 +68,87 @@ export function HeroSection() {
           centered flex container in SmoothScrollHero.
           No motion wrappers here — just plain divs + opacity-only motion. 
         */}
+        {/*
+          Outer: full-height centered column.
+          Inner: the text block is nudged ~10 vh below dead-center so it
+          sits comfortably inside the video frame, not floating at the very
+          middle of the screen.
+          All three elements (quote area · "All Welcome" · CTA) share the
+          same gap so the vertical rhythm matches the quote line-spacing.
+        */}
         <div className="flex flex-col items-center justify-center h-full w-full">
+          <div className="flex flex-col items-center gap-6 md:gap-8" style={{ marginTop: "10vh" }}>
 
-          {/* Quote stack — all absolutely positioned, only opacity changes */}
-          <div className="relative w-full flex items-center justify-center" style={{ height: "28vh" }}>
+            {/* Quote stack — all absolutely positioned, only opacity changes */}
+            <div className="relative w-full flex items-center justify-center" style={{ height: "26vh" }}>
 
-            {/* Quote 1 — bold, visible immediately on page load */}
-            <motion.p
-              style={{ opacity: quote1Opacity }}
-              className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[17px] md:text-[32px] lg:text-[42px] leading-[1.45] md:leading-[1.8] tracking-normal drop-shadow-lg font-extrabold text-center px-8 md:px-6"
-            >
-              Where Maboneng meets over food,<br />
-              music, and candlelight.
-            </motion.p>
-
-            {/* Quote 2 — atmospheric */}
-            <motion.p
-              style={{ opacity: quote2Opacity }}
-              className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.5] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
-            >
-              Rustic wood, warm lights, and African spice<br />
-              drift through the room as conversation grows<br />
-              and the evening settles in.
-            </motion.p>
-
-            {/* Quote 3 — invitation */}
-            <motion.p
-              style={{ opacity: quote3Opacity }}
-              className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.5] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
-            >
-              Join us for lunch, stay for the music,<br />
-              linger into the night.
-            </motion.p>
-
-            {/* Guest review — desktop only (hidden on mobile, no scroll range) */}
-            <motion.div
-              style={{ opacity: reviewOpacity }}
-              className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center px-6"
-            >
-              <p className="font-spectral italic text-cream text-[19px] md:text-[24px] lg:text-[32px] leading-[1.8] md:leading-[2] tracking-[0.02em] drop-shadow-lg mb-6">
-                &ldquo;If you want to understand the spirit<br />
-                of Johannesburg, spend an evening<br />
-                at Pata Pata.&rdquo;
-              </p>
-              <p className="font-spectral text-cream/50 text-[13px] md:text-[15px] tracking-[0.35em] uppercase">
-                &mdash; Shabalala, Guest review
-              </p>
-            </motion.div>
-          </div>
-
-          {/* "All Welcome" */}
-          <motion.p
-            style={{ opacity: welcomeOpacity }}
-            className="mt-3 md:mt-6 text-[10px] md:text-sm tracking-[0.3em] md:tracking-[0.35em] font-spectral text-cream/70 uppercase"
-          >
-            <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle mr-4" />
-            All Welcome
-            <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle ml-4" />
-          </motion.p>
-
-          {/* Reservation CTA — appears after "All Welcome" */}
-          <motion.div
-            style={{ opacity: ctaOpacity }}
-            className="mt-4 md:mt-8 pointer-events-auto"
-          >
-            <MagneticButton intensity={20}>
-              <Link
-                href="/contact#reserve"
-                className="inline-block px-10 py-4 bg-amber hover:bg-amber-light text-charcoal font-bebas tracking-[0.25em] uppercase text-sm rounded-sm pulse-amber transition-colors duration-500"
+              {/* Quote 1 */}
+              <motion.p
+                style={{ opacity: quote1Opacity }}
+                className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[17px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-extrabold text-center px-8 md:px-6"
               >
-                Reserve Your Table
-              </Link>
-            </MagneticButton>
-          </motion.div>
+                Where Maboneng meets over food,<br />
+                music, and candlelight.
+              </motion.p>
+
+              {/* Quote 2 */}
+              <motion.p
+                style={{ opacity: quote2Opacity }}
+                className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
+              >
+                Rustic wood, warm lights, and African spice<br />
+                drift through the room as conversation grows<br />
+                and the evening settles in.
+              </motion.p>
+
+              {/* Quote 3 */}
+              <motion.p
+                style={{ opacity: quote3Opacity }}
+                className="absolute inset-0 flex items-center justify-center font-spectral text-cream text-[15px] md:text-[32px] lg:text-[42px] leading-[1.6] md:leading-[1.8] tracking-normal drop-shadow-lg font-normal text-center px-8 md:px-6"
+              >
+                Join us for lunch, stay for the music,<br />
+                linger into the night.
+              </motion.p>
+
+              {/* Guest review — desktop only */}
+              <motion.div
+                style={{ opacity: reviewOpacity }}
+                className="absolute inset-0 hidden md:flex flex-col items-center justify-center text-center px-6 gap-6"
+              >
+                <p className="font-spectral italic text-cream text-[19px] md:text-[24px] lg:text-[32px] leading-[1.8] md:leading-[2] tracking-[0.02em] drop-shadow-lg">
+                  &ldquo;If you want to understand the spirit<br />
+                  of Johannesburg, spend an evening<br />
+                  at Pata Pata.&rdquo;
+                </p>
+                <p className="font-spectral text-cream/50 text-[13px] md:text-[15px] tracking-[0.35em] uppercase">
+                  &mdash; Shabalala, Guest review
+                </p>
+              </motion.div>
+            </div>
+
+            {/* "All Welcome" — same gap as quote line-spacing */}
+            <motion.p
+              style={{ opacity: welcomeOpacity }}
+              className="text-[10px] md:text-sm tracking-[0.3em] md:tracking-[0.35em] font-spectral text-cream/70 uppercase"
+            >
+              <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle mr-4" />
+              All Welcome
+              <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle ml-4" />
+            </motion.p>
+
+            {/* Reservation CTA — same gap below "All Welcome" */}
+            <motion.div style={{ opacity: ctaOpacity }} className="pointer-events-auto">
+              <MagneticButton intensity={20}>
+                <Link
+                  href="/contact#reserve"
+                  className="inline-block px-10 py-4 bg-amber hover:bg-amber-light text-charcoal font-bebas tracking-[0.25em] uppercase text-sm rounded-sm pulse-amber transition-colors duration-500"
+                >
+                  Reserve Your Table
+                </Link>
+              </MagneticButton>
+            </motion.div>
+
+          </div>
         </div>
       </SmoothScrollHero>
     </section>
