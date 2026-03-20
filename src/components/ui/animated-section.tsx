@@ -62,9 +62,9 @@ export function SectionHeading({
   return (
     <AnimatedSection className={`text-center max-w-2xl mx-auto mb-16 ${className}`}>
       <h2
-        className={`text-3xl md:text-5xl font-clarendon mb-6 ${
+        className={`text-3xl md:text-5xl font-clarendon mb-6 font-medium ${
           darkText ? "text-charcoal" : "text-cream"
-        } font-medium`}
+        }`}
       >
         {title}
       </h2>
@@ -77,7 +77,18 @@ export function SectionHeading({
           {subtitle}
         </p>
       )}
-      <div className={`w-20 h-px mx-auto mt-8 ${darkText ? "bg-charcoal/20" : "bg-cream/20"}`} />
+      {/* Shimmer amber rule — adds depth shimmer under every section heading */}
+      <div className="relative w-20 mx-auto mt-8 overflow-hidden">
+        <div className={`h-px ${darkText ? "bg-charcoal/20" : "bg-cream/20"}`} />
+        <div
+          className="absolute inset-0 h-px"
+          style={{
+            background: "linear-gradient(90deg, transparent, rgba(196,138,45,0.9) 40%, rgba(228,174,80,1) 50%, rgba(196,138,45,0.9) 60%, transparent)",
+            backgroundSize: "200% auto",
+            animation: "amber-shimmer 3s linear infinite",
+          }}
+        />
+      </div>
     </AnimatedSection>
   );
 }

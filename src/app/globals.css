@@ -389,3 +389,245 @@ main .overflow-hidden:has(video):not(.hero-clip) {
 ::-webkit-scrollbar-thumb:hover {
   background: #C48A2D;
 }
+
+/* ══════════════════════════════════════════
+   DEPTH SHADERS — layered atmospheric FX
+   ══════════════════════════════════════════ */
+
+/* ── 1. Ambient Depth Fog ───────────────────
+   A soft radial that pools at the centre of each
+   dark section, giving the illusion of depth. */
+@keyframes depth-breathe {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%       { opacity: 0.65; transform: scale(1.06); }
+}
+.depth-fog {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%,  rgba(196,138,45,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 80%,  rgba(43,38,34,0.55)   0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%,  rgba(43,38,34,0.45)   0%, transparent 60%);
+  animation: depth-breathe 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* ── 2. Specular Light Ray ──────────────────
+   A diagonal streak that sweeps across
+   image containers, suggesting a glossy surface. */
+@keyframes light-sweep {
+  0%   { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+  12%  { opacity: 0.55; }
+  30%  { transform: translateX(220%)  skewX(-18deg); opacity: 0; }
+  100% { transform: translateX(220%)  skewX(-18deg); opacity: 0; }
+}
+.light-ray::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255,220,120,0.18) 48%,
+    rgba(255,240,180,0.30) 50%,
+    rgba(255,220,120,0.18) 52%,
+    transparent 65%
+  );
+  pointer-events: none;
+  animation: light-sweep 7s ease-in-out infinite;
+  z-index: 3;
+}
+
+/* Auto-apply light-ray to every image container in main */
+main .overflow-hidden:has(img):not(.hero-clip),
+main .overflow-hidden:has(video):not(.hero-clip) {
+  position: relative;
+}
+main .overflow-hidden:has(img):not(.hero-clip)::after,
+main .overflow-hidden:has(video):not(.hero-clip)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255,220,120,0.12) 47%,
+    rgba(255,240,180,0.22) 50%,
+    rgba(255,220,120,0.12) 53%,
+    transparent 65%
+  );
+  pointer-events: none;
+  animation: light-sweep 9s ease-in-out infinite;
+  z-index: 3;
+}
+
+/* ── 3. Surface Sheen ───────────────────────
+   Subtle inner-glow bevel on dark cards/sections. */
+.surface-sheen {
+  box-shadow:
+    inset 0  1px 0   rgba(255,220,120,0.12),
+    inset 0 -1px 0   rgba(0,0,0,0.45),
+    inset 1px 0 0    rgba(255,220,120,0.06),
+    inset -1px 0 0   rgba(0,0,0,0.35);
+}
+
+/* ── 4. Section Depth Gradient ──────────────
+   Applied to any `section` on dark backgrounds
+   to give a subtle top-to-bottom aerial perspective. */
+section.bg-charcoal,
+section[class*="bg-charcoal"] {
+  background-image:
+    linear-gradient(180deg,
+      rgba(43,38,34,0)    0%,
+      rgba(30,24,20,0.55) 50%,
+      rgba(43,38,34,0)    100%
+    );
+  background-blend-mode: multiply;
+}
+
+/* ── 5. Frosted-glass card depth ────────────
+   Applied to semi-transparent overlays to
+   boost perceived depth with a micro-blur rim. */
+.glass-depth {
+  backdrop-filter: blur(12px) saturate(1.4) brightness(0.92);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4) brightness(0.92);
+  background: rgba(43,38,34,0.45);
+  border: 1px solid rgba(196,138,45,0.14);
+  box-shadow:
+    0 4px 24px rgba(0,0,0,0.35),
+    0 1px 0    rgba(255,220,120,0.10) inset;
+}
+
+/* ── 6. Parallax Depth Shadow ───────────────
+   A persistent bottom-edge shadow that deepens
+   the spatial separation between stacked sections. */
+.section-depth-shadow {
+  position: relative;
+}
+.section-depth-shadow::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(18,12,8,0.55));
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── 7. Ambient Occlusion Corners ───────────
+   Shadows that bleed into corners of sections,
+   mimicking indirect occlusion lighting. */
+@keyframes ao-pulse {
+  0%, 100% { opacity: 0.50; }
+  50%       { opacity: 0.75; }
+}
+.ao-corners::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 30% 30% at  0%   0%, rgba(10,6,4,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 30% 30% at 100%  0%, rgba(10,6,4,0.45) 0%, transparent 100%),
+    radial-gradient(ellipse 30% 30% at  0% 100%, rgba(10,6,4,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 30% 30% at 100% 100%,rgba(10,6,4,0.50) 0%, transparent 100%);
+  animation: ao-pulse 6s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* ── 8. Iridescent Amber Shimmer ────────────
+   A slow colour-shifting shimmer for amber accents
+   (headings, borders) giving jewel-like depth. */
+@keyframes amber-shimmer {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+.shimmer-amber {
+  background: linear-gradient(
+    90deg,
+    #C48A2D 0%,
+    #E8B84B 25%,
+    #F5D070 50%,
+    #E8B84B 75%,
+    #C48A2D 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: amber-shimmer 4s linear infinite;
+}
+
+/* ── 9. Volumetric Top-Light ────────────────
+   Simulates a single top-down spotlight that
+   pools a soft warm cone over page sections. */
+.vol-light {
+  position: relative;
+  overflow: hidden;
+}
+.vol-light::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 120%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(196,138,45,0.10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── 10. Horizon Glow ───────────────────────
+   A line of ambient warmth at section transitions,
+   like a distant fire on the horizon. */
+.horizon-glow::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(196,138,45,0.5) 30%,
+    rgba(228,174,80,0.8) 50%,
+    rgba(196,138,45,0.5) 70%,
+    transparent
+  );
+  box-shadow: 0 0 18px 4px rgba(196,138,45,0.25);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Auto surface sheen on dark bordered cards ──────────
+   Any element that has a charcoal bg + amber border gets
+   the inset bevel automatically. */
+.bg-charcoal.border,
+[class*="bg-charcoal"][class*="border"] {
+  box-shadow:
+    inset 0  1px 0   rgba(255,220,120,0.08),
+    inset 0 -1px 0   rgba(0,0,0,0.40),
+    inset 1px 0 0    rgba(255,220,120,0.04),
+    inset -1px 0 0   rgba(0,0,0,0.30),
+    0 4px 20px rgba(0,0,0,0.25);
+}
+
+/* ── 11. Depth Noise Texture ────────────────
+   Layered with the existing film grain — a
+   coarser procedural noise for 3D surface feel. */
+.depth-noise {
+  position: relative;
+}
+.depth-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="dn"%3E%3CfeTurbulence type="turbulence" baseFrequency="0.35" numOctaves="4" seed="8" stitchTiles="stitch"/%3E%3CfeColorMatrix type="saturate" values="0"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23dn)"/%3E%3C/svg%3E');
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  z-index: 2;
+}

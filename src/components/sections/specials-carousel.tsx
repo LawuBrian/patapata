@@ -54,10 +54,18 @@ const specials = [
 
 export function SpecialsCarousel() {
   return (
-    <section className="relative py-16 md:py-24 bg-charcoal overflow-hidden">
-      {/* Subtle amber glow */}
+    <section className="relative py-10 md:py-24 bg-charcoal overflow-hidden vol-light ao-corners depth-noise section-depth-shadow horizon-glow">
+      {/* Depth amber glow — layered radials */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full blur-[120px] opacity-10 pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-15 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, #C48A2D 0%, #7A4A10 40%, transparent 70%)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 w-[300px] h-[200px] blur-[80px] opacity-8 pointer-events-none"
+        style={{ background: "radial-gradient(circle, #4A3020, transparent)" }}
+      />
+      <div
+        className="absolute top-0 right-0 w-[200px] h-[200px] blur-[60px] opacity-10 pointer-events-none"
         style={{ background: "radial-gradient(circle, #C48A2D, transparent)" }}
       />
 
@@ -68,10 +76,10 @@ export function SpecialsCarousel() {
           darkText={false}
         />
 
-        {/* All 3 items always visible — grid on all screen sizes */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6 mt-12">
+        {/* All 3 items always visible — compact 2-col on mobile, 3-col on sm+ */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-6 mt-10 max-w-5xl mx-auto">
           {specials.map((item, i) => (
-            <AnimatedSection key={item.name} delay={i * 0.12}>
+            <AnimatedSection key={item.name} delay={i * 0.12} className={i === 2 ? "col-span-2 sm:col-span-1 max-w-[60%] mx-auto w-full sm:max-w-none" : ""}>
               <SpecialCard item={item} />
             </AnimatedSection>
           ))}
@@ -111,29 +119,26 @@ function SpecialCard({ item }: { item: (typeof specials)[0] }) {
           className="w-full bg-charcoal border border-amber/10 overflow-hidden flex flex-col"
           style={{ backfaceVisibility: "hidden" }}
         >
-          <div className="relative aspect-[4/3] overflow-hidden">
+          <div className="relative aspect-[4/3] sm:aspect-[4/3] overflow-hidden">
             <img
               src={item.img}
               alt={item.name}
               className="w-full h-full object-cover transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 to-transparent" />
-            <span className="absolute top-3 right-3 bg-amber text-charcoal text-[10px] font-bebas tracking-[0.2em] uppercase px-2.5 py-1">
+            <span className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-amber text-charcoal text-[8px] sm:text-[10px] font-bebas tracking-[0.15em] uppercase px-1.5 sm:px-2.5 py-0.5 sm:py-1">
               {item.badge}
             </span>
-            <span className="absolute top-3 left-3 bg-charcoal/80 backdrop-blur-sm text-cream/70 text-[10px] font-bebas tracking-[0.15em] uppercase px-2 py-1">
-              {item.tag}
-            </span>
-            <span className="absolute bottom-2 right-2 text-[9px] font-bebas tracking-[0.12em] uppercase text-cream/40">
+            <span className="absolute bottom-1.5 right-1.5 text-[7px] sm:text-[9px] font-bebas tracking-[0.12em] uppercase text-cream/40">
               tap
             </span>
           </div>
-          <div className="p-5 flex-1 flex flex-col">
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <h3 className="font-clarendon text-cream text-lg leading-tight">{item.name}</h3>
-              <span className="font-spectral text-amber text-base shrink-0 mt-0.5">{item.price}</span>
+          <div className="p-3 sm:p-5 flex-1 flex flex-col">
+            <div className="flex items-start justify-between gap-1.5 sm:gap-3 mb-1 sm:mb-2">
+              <h3 className="font-clarendon text-cream text-sm sm:text-lg leading-tight">{item.name}</h3>
+              <span className="font-spectral text-amber text-xs sm:text-base shrink-0 mt-0.5">{item.price}</span>
             </div>
-            <p className="font-light text-cream/50 text-sm leading-relaxed flex-1">{item.desc}</p>
+            <p className="font-light text-cream/50 text-[11px] sm:text-sm leading-relaxed flex-1 hidden sm:block">{item.desc}</p>
           </div>
         </div>
 
@@ -158,10 +163,10 @@ function SpecialCard({ item }: { item: (typeof specials)[0] }) {
           </div>
 
           {/* Content */}
-          <div className="flex flex-col flex-1 p-5 justify-between overflow-hidden">
+          <div className="flex flex-col flex-1 p-3 sm:p-5 justify-between overflow-hidden">
             <div>
-              <h3 className="font-clarendon text-cream text-xl leading-tight mb-2">{item.name}</h3>
-              <p className="font-spectral text-cream/55 text-sm leading-relaxed mb-4">{item.desc}</p>
+              <h3 className="font-clarendon text-cream text-base sm:text-xl leading-tight mb-1 sm:mb-2">{item.name}</h3>
+              <p className="font-spectral text-cream/55 text-xs sm:text-sm leading-relaxed mb-2 sm:mb-4">{item.desc}</p>
               <div className="flex gap-2 mb-3">
                 <span className="text-[9px] font-bebas tracking-[0.12em] uppercase px-2 py-0.5 border border-amber/30 text-amber/70 rounded-sm">
                   {item.badge}
