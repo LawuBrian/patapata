@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AnimatedSection, SectionHeading } from "@/components/ui/animated-section";
+import { CursorSpotlight } from "@/components/ui/cursor-spotlight";
 
 const upcomingShows = [
   {
@@ -33,21 +34,32 @@ const upcomingShows = [
 ];
 
 export function LiveMusicPreviewSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Subtly shift card images at different rates for layered depth
+  const imgY = useTransform(scrollYProgress, [0, 1], [-28, 28]);
+
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-charcoal">
-      {/* Warm ambient glow for nightlife mood */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[120px] opacity-20 pointer-events-none"
+    <section ref={sectionRef} className="relative py-16 md:py-24 overflow-hidden bg-charcoal">
+      {/* Static ambient glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[120px] opacity-20 pointer-events-none"
         style={{ background: "radial-gradient(circle, #C48A2D, transparent)" }}
       />
-      
-      <div className="relative max-w-7xl mx-auto px-6 md:px-10 z-10">
+
+      {/* Cursor spotlight wraps the full-width section content */}
+      <CursorSpotlight className="relative z-10 max-w-7xl mx-auto px-6 md:px-10">
         <SectionHeading
           title="Nights That Carry Rhythm"
           subtitle="Live music and craft cocktails every weekend. Where food meets sound and stories unfold."
           darkText={false}
         />
 
-        {/* Image Grid of Events */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           {upcomingShows.map((show, i) => (
             <AnimatedSection key={show.artist} delay={i * 0.2}>
@@ -56,19 +68,24 @@ export function LiveMusicPreviewSection() {
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.6 }}
               >
-                {/* Background Image */}
-                <motion.img
-                  src={show.img}
-                  alt={show.artist}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                />
-                
+                {/* Parallax image wrapper — extends beyond container for movement room */}
+                <motion.div
+                  className="absolute inset-[-10%]"
+                  style={{ y: imgY }}
+                >
+                  <motion.img
+                    src={show.img}
+                    alt={show.artist}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.06 }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                  />
+                </motion.div>
+
                 {/* Dark Gradient Matte */}
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-700" />
-                
-                {/* Date Badge (Top Left) */}
+
+                {/* Date Badge */}
                 <div className="absolute top-6 left-6 bg-charcoal/80 backdrop-blur-md px-4 py-2 flex flex-col items-center border border-amber/20">
                   <span className="text-amber text-[10px] font-bebas tracking-widest uppercase mb-1">
                     {show.day}
@@ -78,7 +95,7 @@ export function LiveMusicPreviewSection() {
                   </span>
                 </div>
 
-                {/* Content (Bottom) */}
+                {/* Content bottom */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 flex flex-col justify-end">
                   <span className="text-amber text-xs font-bebas tracking-[0.2em] uppercase mb-3 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                     {show.time}
@@ -103,7 +120,7 @@ export function LiveMusicPreviewSection() {
             View All Events
           </Link>
         </AnimatedSection>
-      </div>
+      </CursorSpotlight>
     </section>
   );
 }

@@ -49,8 +49,8 @@ export function Navbar() {
     }
   }, [searchOpen]);
 
-  const headerBg = inHero ? "bg-[#1e1e1e]" : "bg-cream";
-  const headerBorder = inHero ? "border-[#1e1e1e]" : "border-cream";
+  const headerBg = inHero ? "bg-transparent" : "bg-cream";
+  const headerBorder = inHero ? "border-transparent" : "border-cream/20";
   const textColor = inHero ? "text-cream" : "text-charcoal";
   const hoverColor = "hover:text-amber";
   const hamburgerBg = inHero ? "bg-cream" : "bg-charcoal";
@@ -63,7 +63,13 @@ export function Navbar() {
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${headerBg} border-b ${headerBorder}`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-10">
+        {/* gradient so cream text stays legible over hero video */}
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 pointer-events-none bg-gradient-to-b from-black/50 to-transparent transition-opacity duration-700 ${inHero ? "opacity-100" : "opacity-0"}`}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-10">
           <div className="flex items-center justify-between h-20">
 
             {/* Left Desktop Navigation */}
