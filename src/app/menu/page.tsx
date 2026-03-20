@@ -100,16 +100,67 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Featured Dish */}
+      <section className="py-12 md:py-16 bg-charcoal">
+        <div className="max-w-6xl mx-auto px-4 md:px-10">
+          <p className="font-bebas tracking-[0.3em] uppercase text-amber text-xs mb-6">Tonight&apos;s Recommendation</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="relative aspect-[4/3] overflow-hidden rounded-sm"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=900&q=80"
+                alt="Mozambique Prawns — Pata Pata Signature"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent" />
+              <span className="absolute top-4 left-4 bg-amber text-charcoal font-bebas tracking-[0.2em] uppercase text-xs px-3 py-1.5">
+                Signature Dish
+              </span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+            >
+              <h2 className="font-clarendon text-cream text-2xl md:text-3xl mb-3">Mozambique Prawns</h2>
+              <p className="font-spectral text-amber text-xl mb-4">R285</p>
+              <div className="h-[1px] w-10 bg-amber/50 mb-5" />
+              <p className="font-spectral text-cream/65 text-base leading-relaxed mb-6">
+                Flame-grilled tiger prawns in house peri-peri garlic butter, served with fragrant coconut
+                rice and grilled maize bread. Our most loved dish — on the menu since day one.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {["Gluten-Free Option", "Spicy", "Chef's Favourite"].map((tag) => (
+                  <span key={tag} className="text-[10px] font-bebas tracking-[0.15em] uppercase px-2.5 py-1 border border-cream/20 text-cream/50 rounded-sm">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a
+                href="#mains"
+                className="inline-block text-xs font-bebas tracking-[0.2em] uppercase text-amber hover:text-cream transition-colors duration-400"
+              >
+                See all mains below ↓
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Menu Content */}
-      <section className="py-20 bg-background wood-grain-bg plank-lines">
-        <div className="max-w-5xl mx-auto px-6 md:px-10">
+      <section className="py-20 bg-background wood-grain-bg plank-lines" id="mains">
+        <div className="max-w-5xl mx-auto px-4 md:px-10">
           {/* Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-16">
+          <div className="flex overflow-x-auto pb-2 md:flex-wrap md:justify-center gap-2 mb-16 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
             {menuCategories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2.5 text-sm tracking-widest uppercase font-medium rounded-sm transition-all duration-500 ${
+                className={`flex-shrink-0 min-h-[44px] px-5 py-2.5 text-sm tracking-widest uppercase font-medium rounded-sm transition-all duration-500 ${
                   activeCategory === cat.id
                     ? "bg-charcoal text-cream"
                     : "bg-transparent text-charcoal border border-charcoal/20 hover:border-charcoal/60"

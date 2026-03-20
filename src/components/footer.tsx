@@ -23,7 +23,7 @@ export function Footer() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-10 py-14 md:py-20">
         {/* Top section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-16">
           {/* Brand */}
@@ -101,7 +101,7 @@ export function Footer() {
             <div className="flex items-end justify-start md:justify-end">
               <Link
                 href="/contact#reserve"
-                className="px-8 py-3 bg-amber text-charcoal font-bebas text-sm tracking-widest uppercase rounded-sm hover:bg-amber-light hover:scale-105 hover:shadow-[0_0_25px_rgba(214,154,58,0.5)] transition-all duration-500"
+                className="px-8 py-3 min-h-[44px] flex items-center bg-amber text-charcoal font-bebas text-sm tracking-widest uppercase rounded-sm hover:bg-amber-light hover:scale-105 hover:shadow-[0_0_25px_rgba(214,154,58,0.5)] transition-all duration-500"
               >
                 Reserve Your Table
               </Link>
@@ -114,12 +114,12 @@ export function Footer() {
           <p className="text-charcoal/50 text-xs font-sans tracking-wider">
             © {new Date().getFullYear()} Pata Pata Restaurant. All rights reserved.
           </p>
-          <div className="flex gap-6">
+          <div className="flex gap-2">
             {["Instagram", "Facebook", "TikTok"].map((social) => (
               <a
                 key={social}
                 href="#"
-                className="text-charcoal/50 hover:text-amber text-xs tracking-widest uppercase transition-colors duration-500"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-charcoal/50 hover:text-amber text-xs tracking-widest uppercase transition-colors duration-500 px-2"
               >
                 {social}
               </a>

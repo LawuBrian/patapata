@@ -38,25 +38,25 @@ export function FlipItemModal({ item, children }: FlipItemProps) {
 
             {/* 3D Flip Card */}
             <motion.div
-              className="relative w-full max-w-md aspect-[3/4] md:max-w-lg md:aspect-[4/3] preserve-3d"
+              className="relative w-[92vw] max-w-md md:max-w-lg max-h-[88vh] preserve-3d"
               initial={{ rotateY: 90, scale: 0.8, opacity: 0 }}
               animate={{ rotateY: 0, scale: 1, opacity: 1 }}
               exit={{ rotateY: -90, scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
               style={{ perspective: 1000 }}
             >
-              <div className="w-full h-full bg-charcoal border border-amber/20 p-1 flex flex-col overflow-hidden shadow-2xl relative max-h-screen md:max-h-none">
+              <div className="w-full bg-charcoal border border-amber/20 p-1 flex flex-col overflow-y-auto shadow-2xl relative max-h-[88vh]">
 
                 {/* Close Button */}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center bg-black/50 text-cream rounded-full hover:bg-amber hover:text-charcoal transition-colors"
+                  className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center bg-black/50 text-cream rounded-full hover:bg-amber hover:text-charcoal transition-colors"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
 
                 {/* Hero Image */}
-                <div className="relative h-1/2 w-full overflow-hidden">
+                <div className="relative h-48 md:h-64 w-full overflow-hidden shrink-0">
                   <motion.img
                     src={item.image}
                     alt={item.name}
@@ -67,7 +67,7 @@ export function FlipItemModal({ item, children }: FlipItemProps) {
                 </div>
 
                 {/* Details */}
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-charcoal">
+                <div className="flex-1 flex flex-col items-center justify-center text-center p-5 md:p-8 bg-charcoal">
                   {item.badge && (
                     <span className="text-xs font-bebas tracking-[0.2em] text-amber uppercase mb-4">
                       {item.badge}

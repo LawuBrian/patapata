@@ -1,50 +1,42 @@
 import { HeroSection } from "@/components/sections/hero-section";
-import { AtmosphereSection } from "@/components/sections/atmosphere-section";
-import { DishesPreviewSection } from "@/components/sections/dishes-preview";
-import { LiveMusicPreviewSection } from "@/components/sections/live-music-preview";
-import { CocktailsPreviewSection } from "@/components/sections/cocktails-preview";
-import { AntiquesPreviewSection } from "@/components/sections/antiques-preview";
-import { GalleryPreviewSection } from "@/components/sections/gallery-preview";
+import { BrandStorySection } from "@/components/sections/brand-story-section";
+import { SpecialsCarousel } from "@/components/sections/specials-carousel";
+import { ThreeBannersSection } from "@/components/sections/three-banners-section";
+import { SocialProofSection } from "@/components/sections/social-proof-section";
 import { ReservationCTA } from "@/components/sections/reservation-cta";
+
+/* Thin amber rule — marks transitions between sections with different backgrounds */
+function SectionDivider({ light = false }: { light?: boolean }) {
+  return (
+    <div className={`w-full h-px ${light ? "bg-cream/10" : "bg-charcoal/10"}`} aria-hidden />
+  );
+}
 
 export default function Home() {
   return (
-    <>
+    <main>
+      {/* Hero — scroll-driven cinematic opener */}
       <HeroSection />
 
-      {/* Main Cinematic Content Area */}
-      <div className="relative z-10 w-full bg-background text-foreground flex flex-col pt-12 pb-24 gap-32">
-        
-        <div className="relative w-full">
-          <AtmosphereSection />
-        </div>
+      {/* Brand Story — cream bg, generous vertical padding */}
+      <SectionDivider />
+      <BrandStorySection />
 
-        {/* Warm Cinematic Glow Section for Dishes */}
-        <div className="relative w-full cinematic-glow">
-          <DishesPreviewSection />
-        </div>
+      {/* Today's Specials — charcoal bg contrast break */}
+      <SectionDivider light />
+      <SpecialsCarousel />
 
-        <div className="relative w-full">
-          <LiveMusicPreviewSection />
-        </div>
+      {/* Three Banners — full-bleed navigation */}
+      <SectionDivider light />
+      <ThreeBannersSection />
 
-        <div className="relative w-full dark-matte">
-          <CocktailsPreviewSection />
-        </div>
+      {/* Social Proof — charcoal bg */}
+      <SectionDivider light />
+      <SocialProofSection />
 
-        <div className="relative w-full">
-          <AntiquesPreviewSection />
-        </div>
-
-        <div className="relative w-full">
-          <GalleryPreviewSection />
-        </div>
-
-        <div className="relative w-full bg-charcoal/30">
-          <ReservationCTA />
-        </div>
-
-      </div>
-    </>
+      {/* Reservation CTA — cinematic finale */}
+      <SectionDivider light />
+      <ReservationCTA />
+    </main>
   );
 }

@@ -69,12 +69,12 @@ export default function GalleryPage() {
       <section className="py-20 bg-background wood-grain-bg plank-lines">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           {/* Filter Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-16">
+          <div className="flex overflow-x-auto pb-2 md:flex-wrap md:justify-center gap-2 mb-16 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-5 py-2.5 text-sm tracking-widest uppercase font-medium rounded-sm transition-all duration-500 ${
+                className={`flex-shrink-0 min-h-[44px] px-5 py-2.5 text-sm tracking-widest uppercase font-medium rounded-sm transition-all duration-500 ${
                   filter === cat
                     ? "bg-charcoal text-cream"
                     : "bg-transparent text-charcoal border border-charcoal/20 hover:border-charcoal/60"
@@ -145,10 +145,13 @@ export default function GalleryPage() {
               alt="Gallery image expanded"
             />
             <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 text-cream/60 hover:text-cream text-3xl transition-colors duration-300"
+              onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
+              className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center bg-white/10 text-cream rounded-full hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm"
+              aria-label="Close"
             >
-              ×
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             </button>
           </motion.div>
         )}

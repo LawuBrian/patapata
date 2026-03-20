@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { CustomCursor } from "@/components/ui/custom-cursor";
+import CookieConsent from "@/components/ui/cookies-banner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -66,6 +67,7 @@ export default function RootLayout({
       >
         <SmoothScrollProvider>
           <CustomCursor />
+          <CookieConsent privacyHref="/" />
           <Navbar />
           <main>{children}</main>
           <Footer />

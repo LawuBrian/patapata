@@ -52,7 +52,7 @@ export function LiveMusicPreviewSection() {
           {upcomingShows.map((show, i) => (
             <AnimatedSection key={show.artist} delay={i * 0.2}>
               <motion.div
-                className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
+                className="group relative aspect-[16/9] md:aspect-[3/4] overflow-hidden cursor-pointer"
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.6 }}
               >
@@ -79,7 +79,7 @@ export function LiveMusicPreviewSection() {
                 </div>
 
                 {/* Content (Bottom) */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col justify-end">
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 flex flex-col justify-end">
                   <span className="text-amber text-xs font-bebas tracking-[0.2em] uppercase mb-3 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                     {show.time}
                   </span>

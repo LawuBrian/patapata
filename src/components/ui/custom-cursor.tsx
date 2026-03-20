@@ -6,15 +6,19 @@ import { motion } from "framer-motion";
 export function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   useEffect(() => {
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    setIsTouchDevice(isTouch);
+    if (isTouch) return;
+
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     const updateHoverState = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      // Check if the user is hovering over a clickable element
       if (
         window.getComputedStyle(target).cursor === "pointer" ||
         target.tagName.toLowerCase() === "a" ||
@@ -34,6 +38,8 @@ export function CustomCursor() {
       window.removeEventListener("mouseover", updateHoverState);
     };
   }, []);
+
+  if (isTouchDevice) return null;
 
   return (
     <>

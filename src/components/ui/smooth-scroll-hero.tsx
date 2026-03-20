@@ -7,6 +7,7 @@ import {
   useMotionTemplate,
   useScroll,
   useTransform,
+  useReducedMotion,
 } from "framer-motion";
 
 interface iISmoothScrollHeroProps {
@@ -34,18 +35,29 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
   finalClipPercentage = 75,
   children,
 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const effectiveScrollHeight = isMobile ? Math.min(scrollHeight, 900) : scrollHeight;
   const { scrollY } = useScroll();
 
   const clipStart = useTransform(
     scrollY,
-    [0, scrollHeight],
-    [initialClipPercentage, 0]
+    [0, effectiveScrollHeight],
+    prefersReducedMotion ? [0, 0] : [initialClipPercentage, 0]
   );
 
   const clipEnd = useTransform(
     scrollY,
-    [0, scrollHeight],
-    [100 - initialClipPercentage, 100]
+    [0, effectiveScrollHeight],
+    prefersReducedMotion ? [100, 100] : [100 - initialClipPercentage, 100]
   );
 
   const clipPath = useMotionTemplate`polygon(${clipStart}% ${clipStart}%, ${clipEnd}% ${clipStart}%, ${clipEnd}% ${clipEnd}%, ${clipStart}% ${clipEnd}%)`;
@@ -53,12 +65,12 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
   // Ken Burns zoom effect
   const videoScale = useTransform(
     scrollY,
-    [0, scrollHeight],
-    [1, 1.15]
+    [0, effectiveScrollHeight],
+    prefersReducedMotion ? [1, 1] : [1, 1.15]
   );
 
   // Lighter overlay so the restaurant video stays visible
-  const overlayOpacity = useTransform(scrollY, [0, scrollHeight], [0.15, 0.45]);
+  const overlayOpacity = useTransform(scrollY, [0, effectiveScrollHeight], [0.15, 0.45]);
 
   // Video Sequencing State
   const [isPlayingPrimary, setIsPlayingPrimary] = useState(true);
@@ -79,7 +91,7 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
 
   return (
     <div
-      style={{ height: `calc(${scrollHeight}px + 100vh)` }}
+      style={{ height: `calc(${effectiveScrollHeight}px + 100vh)` }}
       className="relative w-full"
     >
       {/* ── Single sticky container for BOTH video + text ── */}
@@ -213,13 +225,14 @@ const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({
             style={{ opacity: overlayOpacity, background: "#1e1e1e" }}
           />
 
-          {/* ── Text layer — INSIDE the clipPath so it never overflows the video frame ── */}
-          <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-            <div className="pointer-events-auto w-full h-full flex flex-col items-center justify-center">
-              {children}
-            </div>
-          </div>
         </motion.div>
+
+        {/* ── Text layer — OUTSIDE the clipPath, always full-screen ── */}
+        <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-auto w-full h-full flex flex-col items-center justify-center">
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );

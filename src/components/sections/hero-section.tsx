@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SmoothScrollHero from "@/components/ui/smooth-scroll-hero";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 
 /* ─────────────────────────────────────────────
    HERO — Fade-only quotes, fixed dead-center
@@ -26,6 +28,7 @@ export function HeroSection() {
   const quote3Opacity = useTransform(scrollY, [750, 950, 1200, 1400], [0, 1, 1, 0]);
   const reviewOpacity = useTransform(scrollY, [1350, 1600], [0, 1]);
   const welcomeOpacity = useTransform(scrollY, [1550, 1750], [0, 1]);
+  const ctaOpacity = useTransform(scrollY, [1700, 1800], [0, 1]);
 
   return (
     <section className="relative" id="hero-section">
@@ -103,6 +106,21 @@ export function HeroSection() {
             All Welcome
             <span className="inline-block w-8 h-[1px] bg-cream/40 align-middle ml-4" />
           </motion.p>
+
+          {/* Reservation CTA — appears after "All Welcome" */}
+          <motion.div
+            style={{ opacity: ctaOpacity }}
+            className="mt-8 pointer-events-auto"
+          >
+            <MagneticButton intensity={20}>
+              <Link
+                href="/contact#reserve"
+                className="inline-block px-10 py-4 bg-amber hover:bg-amber-light text-charcoal font-bebas tracking-[0.25em] uppercase text-sm rounded-sm pulse-amber transition-colors duration-500"
+              >
+                Reserve Your Table
+              </Link>
+            </MagneticButton>
+          </motion.div>
         </div>
       </SmoothScrollHero>
     </section>

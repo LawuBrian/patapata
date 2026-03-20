@@ -1,15 +1,23 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const navLinks = [
-  { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
-  { href: "/live-music", label: "Live Music" },
-  { href: "/antiques", label: "Antiques" },
-  { href: "/gallery", label: "Gallery" },
+  { href: "/gallery", label: "Explore" },
+  { href: "/about", label: "About" },
+  { href: "/live-music", label: "Events" },
+];
+
+const mobileLinks = [
+  { href: "/menu", label: "Menu" },
+  { href: "/gallery", label: "Explore" },
+  { href: "/about", label: "About" },
+  { href: "/live-music", label: "Events" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -17,24 +25,30 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [inHero, setInHero] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 60);
-
-      // Check if we're still within the hero section
       const heroEl = document.getElementById("hero-section");
       if (heroEl) {
         const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
         setInHero(window.scrollY < heroBottom - 80);
       }
     };
-    handleScroll(); // run on mount
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Dynamic classes based on hero state
+  useEffect(() => {
+    if (searchOpen && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [searchOpen]);
+
   const headerBg = inHero ? "bg-[#1e1e1e]" : "bg-cream";
   const headerBorder = inHero ? "border-[#1e1e1e]" : "border-cream";
   const textColor = inHero ? "text-cream" : "text-charcoal";
@@ -49,11 +63,12 @@ export function Navbar() {
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${headerBg} border-b ${headerBorder}`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-10">
           <div className="flex items-center justify-between h-20">
+
             {/* Left Desktop Navigation */}
             <nav className="hidden md:flex flex-1 items-center gap-6">
-              {navLinks.slice(0, 4).map((link) => (
+              {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -66,31 +81,82 @@ export function Navbar() {
             </nav>
 
             {/* Logo Center */}
-            <Link href="/" className="group flex-1 flex justify-center">
-              <motion.span
-                className={`text-3xl md:text-4xl font-nunito tracking-tight uppercase transition-colors duration-500 font-extrabold ${textColor}`}
-                whileHover={{ opacity: 0.8 }}
-              >
-                Pata Pata
-              </motion.span>
+            <Link href="/" className="group flex-1 flex justify-center items-center">
+              {/* Try to load logo image; fall back to wordmark */}
+              <motion.div whileHover={{ opacity: 0.8 }} className="relative flex items-center">
+                <span
+                  className={`text-3xl md:text-4xl font-nunito tracking-tight uppercase transition-colors duration-500 font-extrabold ${textColor}`}
+                >
+                  Pata Pata
+                </span>
+              </motion.div>
             </Link>
 
-            {/* Right Navigation & Tokens */}
-            <div className="hidden md:flex flex-1 items-center justify-end gap-6">
+            {/* Right: search + icons + reserve */}
+            <div className="hidden md:flex flex-1 items-center justify-end gap-4">
+              {/* Collapsible search */}
+              <div className="flex items-center gap-2">
+                <AnimatePresence>
+                  {searchOpen && (
+                    <motion.input
+                      ref={searchRef}
+                      key="search-input"
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{ width: 140, opacity: 1 }}
+                      exit={{ width: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      type="text"
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      onBlur={() => { if (!searchValue) setSearchOpen(false); }}
+                      onKeyDown={(e) => { if (e.key === "Escape") { setSearchOpen(false); setSearchValue(""); } }}
+                      placeholder="Search…"
+                      className={`text-sm font-light bg-transparent border-b outline-none placeholder:text-stone/50 transition-colors duration-500 ${inHero ? "border-cream/40 text-cream placeholder:text-cream/40" : "border-charcoal/30 text-charcoal"}`}
+                    />
+                  )}
+                </AnimatePresence>
+                <button
+                  onClick={() => setSearchOpen(!searchOpen)}
+                  aria-label="Search"
+                  className={`${textColor} ${hoverColor} transition-colors duration-500 min-w-[44px] min-h-[44px] flex items-center justify-center`}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Cart icon */}
+              <button
+                aria-label="Shopping cart"
+                className={`${textColor} ${hoverColor} transition-colors duration-500 min-w-[44px] min-h-[44px] flex items-center justify-center`}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
+              </button>
+
+              {/* User icon → login */}
+              <Link
+                href="/login"
+                aria-label="Sign in"
+                className={`${textColor} ${hoverColor} transition-colors duration-500 min-w-[44px] min-h-[44px] flex items-center justify-center`}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+
+              {/* Reserve CTA */}
               <Link
                 href="/contact#reserve"
-                className={`text-[13px] font-bebas tracking-[0.2em] uppercase ${hoverColor} transition-colors duration-500 ${textColor}`}
+                className="px-5 py-2.5 bg-amber hover:bg-amber-light text-charcoal font-bebas tracking-[0.2em] uppercase text-xs rounded-sm transition-colors duration-500 pulse-amber"
               >
-                Book A Table
+                Reserve
               </Link>
-              <div className={`flex items-center gap-4 cursor-pointer transition-colors duration-500 ${textColor}`}>
-                {/* Search */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hover:text-amber transition-colors"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                {/* Profile */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hover:text-amber transition-colors"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                {/* Cart */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hover:text-amber transition-colors"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-              </div>
             </div>
 
             {/* Mobile Hamburger */}
@@ -124,14 +190,14 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-6"
+            className="fixed inset-0 z-40 bg-charcoal flex flex-col items-center justify-center gap-5 overflow-y-auto py-20"
           >
-            {navLinks.map((link, i) => (
+            {mobileLinks.map((link, i) => (
               <motion.div
                 key={link.href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
               >
                 <Link
                   href={link.href}
@@ -142,15 +208,33 @@ export function Navbar() {
                 </Link>
               </motion.div>
             ))}
+            {/* Mobile icons row */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: mobileLinks.length * 0.08 + 0.1 }}
+              className="flex items-center gap-6 mt-4"
+            >
+              <Link href="/login" onClick={() => setMobileOpen(false)} className="text-cream/60 hover:text-amber transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Sign in">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+              <button aria-label="Cart" className="text-cream/60 hover:text-amber transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
+              </button>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navLinks.length * 0.1, duration: 0.5 }}
+              transition={{ delay: mobileLinks.length * 0.08 + 0.2, duration: 0.5 }}
             >
               <Link
                 href="/contact#reserve"
                 onClick={() => setMobileOpen(false)}
-                className="mt-4 px-8 py-3 bg-amber text-charcoal font-bebas text-lg tracking-widest uppercase rounded-sm pulse-amber"
+                className="mt-2 px-10 py-4 bg-amber text-charcoal font-bebas text-lg tracking-widest uppercase rounded-sm pulse-amber inline-block"
               >
                 Reserve Your Table
               </Link>

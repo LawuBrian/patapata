@@ -58,8 +58,8 @@ export default function ContactPage() {
 
       {/* Reservation Form */}
       <section id="reserve" className="py-20 bg-background wood-grain-bg plank-lines">
-        <div className="max-w-6xl mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="max-w-6xl mx-auto px-4 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Left — Form */}
             <AnimatedSection>
               <div>
@@ -97,7 +97,7 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
-                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40"
+                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40"
                       />
                       <input
                         type="email"
@@ -107,7 +107,7 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
                         }
-                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40"
+                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40"
                       />
                     </div>
 
@@ -119,14 +119,14 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
                         }
-                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40"
+                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40"
                       />
                       <select
                         value={formData.guests}
                         onChange={(e) =>
                           setFormData({ ...formData, guests: e.target.value })
                         }
-                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
+                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
                       >
                         <option value="">Number of Guests</option>
                         {[1, 2, 3, 4, 5, 6, 7, 8, "9+"].map((n) => (
@@ -144,14 +144,14 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, date: e.target.value })
                         }
-                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
+                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
                       />
                       <select
                         value={formData.time}
                         onChange={(e) =>
                           setFormData({ ...formData, time: e.target.value })
                         }
-                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
+                        className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
                       >
                         <option value="">Preferred Time</option>
                         {["12:00", "12:30", "13:00", "13:30", "14:00", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"].map((t) => (
@@ -165,7 +165,7 @@ export default function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, occasion: e.target.value })
                       }
-                      className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
+                      className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500"
                     >
                       <option value="">Special Occasion? (Optional)</option>
                       <option value="birthday">Birthday</option>
@@ -183,7 +183,7 @@ export default function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
                       }
-                      className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-sm font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40 resize-none"
+                      className="w-full px-4 py-3.5 bg-card border border-charcoal/10 text-charcoal text-base font-light rounded-sm focus:outline-none focus:border-amber transition-colors duration-500 placeholder:text-wood/40 resize-none"
                     />
 
                     <button
@@ -201,7 +201,7 @@ export default function ContactPage() {
             <AnimatedSection delay={0.3}>
               <div className="space-y-10">
                 {/* Map placeholder */}
-                <div className="aspect-[4/3] bg-charcoal/5 rounded-sm overflow-hidden">
+                <div className="min-h-[250px] md:aspect-[4/3] bg-charcoal/5 rounded-sm overflow-hidden">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3580.5!2d28.0473!3d-26.2041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDEyJzE1LjIiUyAyOMKwMDInNTAuMyJF!5e0!3m2!1sen!2sza!4v1234567890"
                     width="100%"
