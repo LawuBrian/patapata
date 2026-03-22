@@ -72,6 +72,28 @@ export function Navbar() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-10">
           <div className="flex items-center justify-between h-20">
 
+            {/* Mobile Hamburger */}
+            <div className="flex-1 flex md:hidden items-center justify-start">
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+                aria-label="Toggle menu"
+              >
+                <motion.span
+                  animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                  className={`w-7 h-[2px] block transition-colors duration-500 ${hamburgerBg}`}
+                />
+                <motion.span
+                  animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
+                  className={`w-7 h-[2px] block transition-colors duration-500 ${hamburgerBg}`}
+                />
+                <motion.span
+                  animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                  className={`w-7 h-[2px] block transition-colors duration-500 ${hamburgerBg}`}
+                />
+              </button>
+            </div>
+
             {/* Left Desktop Navigation */}
             <nav className="hidden md:flex flex-1 items-center gap-6">
               {navLinks.map((link) => (
@@ -176,25 +198,8 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
-              aria-label="Toggle menu"
-            >
-              <motion.span
-                animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                className={`w-7 h-[2px] block transition-colors duration-500 ${hamburgerBg}`}
-              />
-              <motion.span
-                animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-                className={`w-7 h-[2px] block transition-colors duration-500 ${hamburgerBg}`}
-              />
-              <motion.span
-                animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                className={`w-7 h-[2px] block transition-colors duration-500 ${hamburgerBg}`}
-              />
-            </button>
+            {/* Right Mobile Spacer to keep logo centered */}
+            <div className="flex-1 flex md:hidden" />
           </div>
         </div>
       </motion.header>
